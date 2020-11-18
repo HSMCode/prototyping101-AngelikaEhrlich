@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 10.0f; // Speed for our hot red vehicle
-    public float rotationSpeed = 100.0f;
+    public float speed = 20f; // Speed for our hot red vehicle
+    public float turnSpeed = 50f; // Turn speed for our hot red vehicle
+    private float verticalInput; // Input of arrow keys up and down
+    private float horizontalInput; // Input of arrow keys left and right
 
     // Start is called before the first frame update
     void Start()
@@ -16,21 +18,18 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Move our hot red vehicle!
-        // Get the horizontal and vertical axis.
-        // By default they are mapped to the arrow keys.
-        // The value is in the range -1 to 1
-        float translation = Input.GetAxis("Vertical") * speed;
-        float rotation = Input.GetAxis("Horizontal") * rotationSpeed;
+        verticalInput = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxis("Horizontal");
 
-        // Make it move 10 meters per second instead of 10 meters per frame...
-        translation *= Time.deltaTime;
-        rotation *= Time.deltaTime;
+        // Move our hot red vehicle forward and backwards
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * verticalInput);
 
-        // Move translation along the object's z-axis
-        transform.Translate(0, 0, translation);
+        if (verticalInput != 0)
+        {
+            // If TRUE, e.g. if up or down arrow keys are pressed, do:
+            // Turn our hot red vehicle, when pressing left and right keys
+            transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput, Space.Self);
+        }
 
-        // Rotate around our y-axis
-        transform.Rotate(0, rotation, 0);
     }
 }
