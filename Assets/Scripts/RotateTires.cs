@@ -6,7 +6,7 @@ public class RotateTires : MonoBehaviour
 {
     private float rotationSpeed = 4;
 
-    // public GameObject wheels;
+    // private GameObject wheels;
     private float x = 1;
 
     // Start is called before the first frame update
